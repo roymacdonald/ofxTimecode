@@ -26,7 +26,7 @@ float ofxTimecode::getFPS(){
 }
     
 //expects format HH:MM:SS:MLS
-unsigned long long ofxTimecode::millisForTimecode(string timecode){
+uint64_t ofxTimecode::millisForTimecode(std::string timecode){
     int times[4];
     if(decodeString(timecode, times)){
                //hours						
@@ -42,7 +42,7 @@ unsigned long long ofxTimecode::millisForTimecode(string timecode){
 	return -1;
 }
 
-string ofxTimecode::timecodeForMillis(unsigned long long millis, string millisDelimiter){
+std::string ofxTimecode::timecodeForMillis(uint64_t millis, std::string millisDelimiter){
     char buf[512];
 	sprintf(buf, "%02d:%02d:%02d%s%03d", int(millis / (60 * 60 * 1000)),  //hours
             						    int((millis / (60 * 1000)) % 60), //minutes
@@ -51,11 +51,11 @@ string ofxTimecode::timecodeForMillis(unsigned long long millis, string millisDe
                                         int(millis % 1000));
 //    sprintf(buf, "%ld", millis);
 
-    return string(buf);
+    return std::string(buf);
 }
 
 //expects format HH:MM:SS:FR
-float ofxTimecode::secondsForTimecode(string timecode){
+float ofxTimecode::secondsForTimecode(std::string timecode){
     return millisForTimecode(timecode) / 1000.;
 }
 
@@ -63,7 +63,7 @@ int ofxTimecode::frameForSeconds(float timeInSeconds){
     return timeInSeconds * fps;
 }
 
-int ofxTimecode::frameForMillis(unsigned long long timeInMillis){
+int ofxTimecode::frameForMillis(uint64_t timeInMillis){
     return timeInMillis * fps / 1000;
 }
 
@@ -71,26 +71,26 @@ float ofxTimecode::secondsForFrame(int frame){
 	return frame / fps;
 }
 
-unsigned long long ofxTimecode::millisForFrame(int frame){
+uint64_t ofxTimecode::millisForFrame(int frame){
 	return frame * 1000 / fps;    
 }
 
-int ofxTimecode::frameForTimecode(string timecode){
+int ofxTimecode::frameForTimecode(std::string timecode){
     return frameForMillis(millisForTimecode(timecode));
 }
 
-string ofxTimecode::timecodeForSeconds(float seconds, string millisDelimiter){
+std::string ofxTimecode::timecodeForSeconds(float seconds, std::string millisDelimiter){
     return timecodeForMillis(seconds*1000, millisDelimiter);
 }
     
-string ofxTimecode::timecodeForFrame(int frame, string millisDelimiter){
+std::string ofxTimecode::timecodeForFrame(int frame, std::string millisDelimiter){
     return timecodeForMillis(millisForFrame(frame), millisDelimiter);
 }
 
-bool ofxTimecode::decodeString(string time, int* times){
+bool ofxTimecode::decodeString(std::string time, int* times){
 	ofStringReplace(time, ",", ":");
     ofStringReplace(time, ";", ":");
-    vector<string> split = ofSplitString(time, ":");
+    vector<std::string> split = ofSplitString(time, ":");
     if(split.size() != 4){
         ofLogError("ofxTimecode::decodeString -- incorrect timecode");
         return false;

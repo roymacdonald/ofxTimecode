@@ -9,7 +9,8 @@
 
 #pragma once
 
-#include "ofMain.h"
+#include <cstdint>//"ofMain.h"
+#include <string>
 
 class ofxTimecode {
   public:
@@ -20,22 +21,22 @@ class ofxTimecode {
     
     //these functions expect format HH:MM:SS:MLS
     //and negative value if improperly formatted
-	static unsigned long long millisForTimecode(string timecode);
-    static float secondsForTimecode(string timecode);
-    int frameForTimecode(string timecode);
+	static uint64_t millisForTimecode(std::string timecode);
+    static float secondsForTimecode(std::string timecode);
+    int frameForTimecode(std::string timecode);
     
     int frameForSeconds(float timeInSeconds);
-    int frameForMillis(unsigned long long timeInMillis);
+    int frameForMillis(uint64_t timeInMillis);
     
     float secondsForFrame(int frame);
-    unsigned long long millisForFrame(int frame);
+    uint64_t millisForFrame(int frame);
     
     //returns format HH:MM:SS:FR
-    static string timecodeForMillis(unsigned long long millis, string millisDelimiter = ":");
-    static string timecodeForSeconds(float seconds, string millisDelimiter = ":");
-    string timecodeForFrame(int frame, string millisDelimiter = ":");
+    static std::string timecodeForMillis(uint64_t millis, std::string millisDelimiter = ":");
+    static std::string timecodeForSeconds(float seconds, std::string millisDelimiter = ":");
+    std::string timecodeForFrame(int frame, std::string millisDelimiter = ":");
     
   protected:
     float fps;
-    static bool decodeString(string time, int* times);
+    static bool decodeString(std::string time, int* times);
 };
