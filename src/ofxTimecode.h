@@ -23,17 +23,23 @@ class ofxTimecode {
     //and negative value if improperly formatted
 	static uint64_t millisForTimecode(std::string timecode);
     static float secondsForTimecode(std::string timecode);
+
     int frameForTimecode(std::string timecode);
-    
     int frameForSeconds(float timeInSeconds);
-    int frameForMillis(uint64_t timeInMillis);
-    
+    int frameForMillis(uint64_t timeInMillis);    
     float secondsForFrame(int frame);
     uint64_t millisForFrame(int frame);
+
+    static int frameForTimecode(std::string timecode, float fps);
+    static int frameForSeconds(float timeInSeconds, float fps);
+    static int frameForMillis(uint64_t timeInMillis, float fps);
+    static float secondsForFrame(int frame, float fps);
+    static uint64_t millisForFrame(int frame, float fps);
     
     //returns format HH:MM:SS:FR
     static std::string timecodeForMillis(uint64_t millis, std::string millisDelimiter = ":");
     static std::string timecodeForSeconds(float seconds, std::string millisDelimiter = ":");
+    static std::string timecodeForFrame(int frame, float fps, std::string millisDelimiter = ":");
     std::string timecodeForFrame(int frame, std::string millisDelimiter = ":");
     
   protected:
